@@ -1,0 +1,7 @@
+---
+- hosts: all
+  tasks:
+    - name: create the hello.txt
+      shell: echo "Hello World!" > /tmp/hello.txt
+      args:
+        creates: /tmp/hello.txt
