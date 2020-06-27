@@ -11,8 +11,8 @@ Ansibleをローカルで動かすためのRepositoryです。
 ## 注意点
 
 このRepositoryは練習用となるため、利便性重視でパスワードや鍵情報をgitに含めています。
-しかし、ProductionやStagingなどセキュリティを意識しなければならないような環境に置いては、
-パスワードや鍵情報を含めることはセキュリティ上リスクの高い行為となるため、避けてください。
+
+しかし、ProductionやStagingなどセキュリティを意識しなければならないような環境に置いては、パスワードや鍵情報を含めることはセキュリティ上リスクの高い行為となるため、避けてください。
 
 もしも、このRepositoryを元にAnsibleのコードを書く際はくれぐれも上記点に留意してください。
 
@@ -35,9 +35,17 @@ CONTAINER ID        IMAGE                     COMMAND             CREATED       
 0804759edee5        local/c7.8-systemd-sshd   "/usr/sbin/init"    42 minutes ago      Up 42 minutes       0.0.0.0:12222->22/tcp   ansible_base
 ```
 
+build完了後は以下のようにAnsibleを実際に実行してみましょう。
+
+```bash
+cd ansible
+chmod 600 .ssh/ansible_base_rsa
+ansible-playbook -i localhost site.yml
+```
+
 もしもコンテナに接続したい場合はdocker経由での接続とssh接続ができます。
-しかしながらssh接続はCurrentDirectoryを変更する必要があることに注意してください。
-これは、`ssh_config`に記載された`IdentityFile`のパスがsshを実行したCurrentDirectoryからの相対パスであることが原因です。
+
+しかしながらssh接続はCurrentDirectoryを変更する必要があることに注意してください。これは、`ssh_config`に記載された`IdentityFile`のパスがsshを実行したCurrentDirectoryからの相対パスであることが原因です。
 
 ```bash
 # Docker
