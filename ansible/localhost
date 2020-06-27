@@ -1,5 +1,2 @@
 [docker_local]
-docker_local ansible_host=localhost
-docker_local ansible_port=12222
-docker_local ansible_ssh_user=root
-docker_local ansible_ssh_pass=Vc9y2h7P
+docker.deploy_user
