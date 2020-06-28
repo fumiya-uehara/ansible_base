@@ -1,0 +1,27 @@
+- name: Download epel-release
+  yum:
+    name: https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
+    state: present
+  tags: mysql
+
+- name: Install mysql
+  yum:
+    name: [mysql-community-devel, mysql-community-server, mysql-utilities, MySQL-python]
+    state: present
+  tags: mysql
+
+- name: Put Configuration file
+  template:
+    src: my.cnf.j2
+    dest: /etc/my.cnf
+  notify: Restart mysqld
+  tags: mysql
+
+- name: Enable mysql
+  service:
+    name: mysqld
+    enabled: yes
+    state: started
+  tags: mysql
+
+# 以降にパスワード更新用のTaskを追加予定。一旦は保留

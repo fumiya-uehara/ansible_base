@@ -1,0 +1,32 @@
+---
+- name: Confirm installed mackerel-agent
+  yum:
+    list: mackerel-agent
+    state: installed
+  register: is_installed
+  tags: mackerel
+
+- name: Install mackerel-agent when not install
+  shell: "curl -fsSL https://mackerel.io/file/script/setup-all-yum-v2.sh | MACKEREL_APIKEY='<YOUR_API_KEY>' sh"
+  when: is_installed.results == []
+  tags: mackerel
+
+- name: Install mackerel plugins
+  yum:
+    name: mackerel-agent-plugins
+    state: present
+  tags: mackerel
+
+# API_KEYを設定ファイルに入れないと起動に失敗する。
+- name: Put configuration file
+  template:
+    src: mackerel-agent.conf.j2
+    dest: /etc/mackerel-agent/mackerel-agent.conf
+  notify: Restart mackerel-agent
+  tags: mackerel
+
+- name: Start mackerel-agent
+  service:
+    name: mackerel-agent
+    enabled: yes
+    state: started
