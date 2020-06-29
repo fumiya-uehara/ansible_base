@@ -1,3 +1,4 @@
 ---
 ansible_become_password: Wa8z5eCG
 mysql_root_password: 5b&NGf,k/6$~
+mysql_mackerel_password: pFQRarzS)hc9

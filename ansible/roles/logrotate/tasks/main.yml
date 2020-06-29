@@ -27,13 +27,6 @@
     mode: '0755'
   tags: logrotate
 
-- name: Copy test files
-  copy:
-    src: ./mysqld.log
-    dest: /tmp/log/mysqld.log
-    mode: '0644'
-  tags: logrotate
-
 - name: Replace config file
   copy:
     src: ./mysql

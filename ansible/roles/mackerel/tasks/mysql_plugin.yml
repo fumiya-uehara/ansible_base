@@ -1,0 +1,26 @@
+---
+- name: Get service facts
+  service_facts:
+
+- name: Create mackerel user on mysql
+  mysql_user:
+    update_password: on_create
+    name: mackerel
+    password: "{{ mysql_mackerel_password }}"
+    priv: '*.*:PROCESS,REPLICATION CLIENT'
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    login_unix_socket: /var/lib/mysql/mysql.sock
+    state: present
+  when: ansible_facts.services["mysqld.service"] is defined
+
+# 一旦コピペ
+- name: Put configuration file
+  template:
+    src: mackerel-agent.conf.j2
+    dest: /etc/mackerel-agent/mackerel-agent.conf
+    owner: root
+    group: root
+    mode: '0640'
+  notify: Restart mackerel-agent
+  tags: mackerel

@@ -64,8 +64,8 @@ apikey = ""
 # Plugin for MySQL
 #   Appropriate previlege settings required.
 #   By default, the plugin accesses MySQL on localhost by 'root' with no password.
-# [plugin.metrics.mysql]
-# command = "/usr/bin/mackerel-plugin-mysql -username=mackerel -password='/!BCz682ef4C'"
+[plugin.metrics.mysql]
+command = "/usr/bin/mackerel-plugin-mysql -username=mackerel -password='{{ mysql_mackerel_password }}'"
 
 # Plugin for Nginx
 #   By default, the plugin accesses to http://localhost:8080/nginx_status
