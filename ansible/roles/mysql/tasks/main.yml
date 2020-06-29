@@ -24,4 +24,21 @@
     state: started
   tags: mysql
 
+- name: Search initialized root password
+  shell: >
+    grep "password" /var/log/mysqld.log | awk '{print $(NF)}'
+  register: initialized_root_password
+
+- name: Change mysql root password
+  shell: >
+    mysql --user root --password={{ initialized_root_password.stdout }} \
+    --connect-expired-password \
+    --execute="alter user 'root'@'localhost' identified with mysql_native_password by '{{ mysql_root_password }}';"
+  when: initialized_root_password.stdout != ""
+
+- name: Delete password line from mysqld.log
+  shell: >
+    sed -i -e '/password/d' /var/log/mysqld.log
+  when: initialized_root_password.stdout != ""
+
 # 以降にパスワード更新用のTaskを追加予定。一旦は保留
