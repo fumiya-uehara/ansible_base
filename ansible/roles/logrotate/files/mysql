@@ -1,0 +1,30 @@
+/tmp/log/mysqld.log {
+   create 640 root root
+   notifempty
+   daily
+   rotate 10
+   missingok
+   compress
+   dateext
+   size 1k
+   sharedscripts
+   postrotate
+      # just if mysqld is really running
+      export HOME=/root
+      if test -x /usr/bin/mysqladmin && \
+         /usr/bin/mysqladmin ping &>/dev/null
+      then
+         /usr/bin/mysqladmin flush-logs
+      fi
+   endscript
+}
+
+/fio/log/mysqldump.log {
+        create 644 root root
+        notifempty
+        daily
+        rotate 90
+        missingok
+        compress
+        dateext
+}
