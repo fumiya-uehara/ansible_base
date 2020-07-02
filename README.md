@@ -61,5 +61,5 @@ ssh -F .ssh/ssh_config docker.deploy_user
 Ansible実行後に以下のコマンドを実行し「Hello Ansible!」と標準出力されればAnsibleが反映されていることを確認できます。
 
 ```bash
-docker container exec ansible_base cat /tmp/hello.txt
+docker container exec ansible_base cat /tmp/hello
 ```
