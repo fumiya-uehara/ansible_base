@@ -2,7 +2,9 @@
 - hosts: all
   remote_user: deploy_user
   become: yes
-  roles:
-    - { role: mysql, tags: mysql }
-    - { role: mackerel, tags: mackerel }
-    - { role: logrotate, tags: logrotate }
+  tasks:
+    - name: make hello in tmp
+      copy:
+        dest: /tmp/hello
+        content: Hello Ansible!
+        mode: 444
